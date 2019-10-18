@@ -19,7 +19,6 @@ export default class LogIn extends Component {
     alert('Next button pressed');
   }
 
-
   render() {
     return (
       <KeyboardAvoidingView
@@ -47,11 +46,11 @@ export default class LogIn extends Component {
               customStyle={{ marginBottom: 30 }}
             />
           </ScrollView>
-        </View>
-        <View style={styles.nextButton}>
-          <NextArrowButton
-            handleNextButton={this.handleNextButton}
-          />
+          <View style={styles.nextButton}>
+            <NextArrowButton
+              handleNextButton={this.handleNextButton}
+            />
+          </View>
         </View>
       </KeyboardAvoidingView>
     );
@@ -81,7 +80,7 @@ const styles = StyleSheet.create({
   },
   nextButton: {
     alignItems: 'flex-end',
-    right: 20,
+    right: 10,
     bottom: 0,
   },
 });
