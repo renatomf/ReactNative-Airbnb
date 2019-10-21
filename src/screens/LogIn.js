@@ -8,20 +8,23 @@ import {
   ScrollView,
   KeyboardAvoidingView,
 } from 'react-native';
-
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { ActionCreators } from '../redux/actions';
 import colors from '../styles/colors';
 import InputField from '../components/form/InputField';
 import NextArrowButton from '../components/buttons/NextArrowButton';
 import Notification from '../components/Notification';
 import Loader from '../components/Loader';
 
-export default class LogIn extends Component {
+class LogIn extends Component {
   constructor(props) {
     super(props);
     this.state = {
       formValid: true,
       validEmail: false,
       emailAddress: '',
+      password: '',
       validPassword: false,
       loadingVisible: false,
     }
@@ -36,9 +39,9 @@ export default class LogIn extends Component {
     this.setState({ loadingVisible: true });
 
     setTimeout(() => {
-      if (this.state.emailAddress === 'red@gmail.com' && this.state.validPassword) {
+      const { emailAddress, password } = this.state;
+      if (this.props.logIn(emailAddress, password)) {
         this.setState({ formValid: true, loadingVisible: false });
-        
       } else {
         this.setState({ formValid: false, loadingVisible: false });
       }
@@ -65,6 +68,7 @@ export default class LogIn extends Component {
   }
 
   handlePasswordChange(password) {
+    this.setState({ password });
     if (!this.state.validPassword) {
       if (password.length > 4) {
         this.setState({ validPassword: true });
@@ -87,6 +91,7 @@ export default class LogIn extends Component {
     const showNotification = formValid ? false : true;
     const background = formValid ? colors.green01 : colors.darkOrange;
     const notificationMarginTop = showNotification ? 10 : 0;
+    console.log(this.props.loggedInStatus);
     return (
       <KeyboardAvoidingView
         style={[{ backgroundColor: background }, styles.wrapper]}
@@ -173,3 +178,11 @@ const styles = StyleSheet.create({
     bottom: 0,
   }
 });
+
+const mapStateToProps = state => ({
+  loggedInStatus: state.loggedInStatus,
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators(ActionCreators, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(LogIn);

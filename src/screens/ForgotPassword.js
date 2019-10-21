@@ -16,73 +16,71 @@ import Notification from '../components/Notification';
 import Loader from '../components/Loader';
 
 export default class ForgotPassword extends Component {
-constructor(props) {
+  constructor(props) {
     super(props);
     this.state = {
-        formValid: true,
-        validEmail: false,
-        emailAddress: '',
-        loadingVisible: false,
+      formValid: true,
+      validEmail: false,
+      emailAddress: '',
+      loadingVisible: false,
     };
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.goToNextStep = this.goToNextStep.bind(this);
     this.handleCloseNotification = this.handleCloseNotification.bind(this);
-}
+  }
 
-handleEmailChange(email) {
+  handleEmailChange(email) {
     const emailCheckRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     this.setState({ emailAddress: email });
 
     if (!this.state.validEmail) {
-        if (emailCheckRegex.test(email)) {
-            this.setState({ validEmail: true });
-        }
+      if (emailCheckRegex.test(email)) {
+        this.setState({ validEmail: true });
+      }
     } else {
-        if (!emailCheckRegex.test(email)) {
-            this.setState({ validEmail: false });
-        }
+      if (!emailCheckRegex.test(email)) {
+        this.setState({ validEmail: false });
+      }
     }
-}
+  }
 
-handleCloseNotification() {
+  handleCloseNotification() {
     this.setState({ formValid: true });
-}
+  }
 
-goToNextStep() {
+  goToNextStep() {
     this.setState({ loadingVisible: true });
     setTimeout(() => {
-        if (this.state.emailAddress === 'wrong@gmail.com') {
-            this.setState({
-                loadingVisible: false,
-                formValid: false,
-            });
-        } else {
-            this.setState({
-                loadingVisible: false,
-                formValid: true,
-            });
-        }
+      if (this.state.emailAddress === 'wrong@gmail.com') {
+        this.setState({
+          loadingVisible: false,
+          formValid: false,
+        });
+      } else {
+        this.setState({
+          loadingVisible: false,
+          formValid: true,
+        });
+      }
     }, 2000);
-}
-
-
+  }
 
   render() {
-      const { loadingVisible, formValid, validEmail } = this.state;
-      const background = formValid ? colors.green01 : colors.darkOrange;
-      const showNotification = formValid ? false : true;
+    const { loadingVisible, formValid, validEmail } = this.state;
+    const background = formValid ? colors.green01 : colors.darkOrange;
+    const showNotification = formValid ? false : true;
     return (
-        <KeyboardAvoidingView
+      <KeyboardAvoidingView
         style={[{ backgroundColor: background }, styles.wrapper]}
         behavior="padding"
       >
         <View style={styles.scrollViewWrapper}>
           <ScrollView style={styles.scrollView}>
             <Text style={styles.forgotPasswordHeading}>
-Forgot your password?
+              Forgot your password?
             </Text>
             <Text style={styles.forgotPasswordSubheading}>
-Enter your email to find your account
+              Enter your email to find your account
             </Text>
             <InputField
               customStyle={{ marginBottom: 30 }}
