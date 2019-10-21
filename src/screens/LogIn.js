@@ -18,9 +18,9 @@ export default class LogIn extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      formValid: false,
-
+      formValid: true,
     }
+    this.handleCloseNotification = this.handleCloseNotification.bind(this);
   }
 
   handleNextButton() {
@@ -28,15 +28,16 @@ export default class LogIn extends Component {
   }
 
   handleCloseNotification() {
-    alert('Close Notification');
+    this.setState({ formValid: true });
   }
 
   render() {
     const { formValid } = this.state;
     const showNotification = formValid ? false : true;
+    const background = formValid ? colors.green01 : colors.darkOrange;
     return (
       <KeyboardAvoidingView
-        style={styles.wrapper}
+        style={[{backgroundColor: background}, styles.wrapper]}
       >
         <View style={styles.scrollViewWrapper}>
           <ScrollView style={styles.scrollView}>
@@ -83,7 +84,7 @@ export default class LogIn extends Component {
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
-    backgroundColor: colors.green01,
+    // backgroundColor: colors.green01,
   },
   scrollViewWrapper: {
     flex: 1,

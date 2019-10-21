@@ -19,6 +19,7 @@ export default class Notification extends Component {
             positionValue: new Animated.Value(60),
         }
         this.closeNotification = this.closeNotification.bind(this);
+        this.animateNotification = this.animateNotification.bind(this);
     }
 
     animateNotification(value) {
